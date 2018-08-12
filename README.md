@@ -7,7 +7,7 @@ It is a minimalistic wrap on mpg123//mplayer//omxplayer and a bunch of internet 
 Is is just a simple web interfcae to search, play, modify Internet Radios. Adding your genre, and information to search easily.
 
 
-## Installation on Raspberry // CHIP whatever
+## Installation on CHIP
 
 Just copy the branch in a directory like /usr/local/bin/radioserver 
 
@@ -19,15 +19,16 @@ Starting from git repository I would suggest this (suppose your target device is
 	cd radio-server
 	sudo cp -a radio-server /usr/local/bin
 
-Install cherrypy3 and sqlite3 
+Install packages
 
-	$ sudo apt-get install python-cherrypy3
-	$ sudo apt-get install sqlite3
-
-Install player
-	$ sudo apt-get install mplayer 
-    OR
-	$ sudo apt-get install mpg123 
+	$ sudo apt-get install build-essential python-pip python-dev python-cherrypy3 sqlite3 mpg123 i2c-tools python-pil
+	$ sudo -H pip install --upgrade --ignore-installed pip setuptools
+	$ sudo pip install smbus2 spidev RPi.GPIO
+	$ cd git/ssd1306; sudo pip install .
+	
+Configure sound
+        
+	$ sudo printf "pcm.!default {\n  type hw\n  card AUDIO\n}\nctl.!default {\n  type hw\n  card AUDIO\n}\n"
 	
 Configure parameters in radioserver.sh # it is already preconfigured if installation is in /usr/local/bin/radioserver
 Anyway it is possible to change default parameters of server like
