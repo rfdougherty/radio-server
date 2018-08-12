@@ -81,4 +81,7 @@ They can be changed /insert/modify/delete with User interface
 
 It took me sometime to discover them... I guess internet radio apps make that part of their value ;)
 
+# Repair corrupt flash
+
+Try: nandtest -k /dev/mtd0
 
