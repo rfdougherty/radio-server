@@ -9,15 +9,9 @@ Is is just a simple web interfcae to search, play, modify Internet Radios. Addin
 
 ## Installation on CHIP
 
-Just copy the branch in a directory like /usr/local/bin/radioserver 
+Starting from git repo:
 
-Starting from git repository I would suggest this (suppose your target device is 192.168.2.123):
-
-	ssh root@192.168.168.2.123
-	cd /tmp
-	git clone https://github.com/ernitron/radio-server.git
-	cd radio-server
-	sudo cp -a radio-server /usr/local/bin
+	git clone https://github.com/rfdougherty/radio-server.git
 
 Install packages
 
@@ -28,10 +22,12 @@ Install packages
 	$ cd CHIP_IO; sudo pip install .
 	$ cd Adafruit_Python_GPIO; sudo pip install .
 	
-Configure sound
+Configure /etc files
         
 	$ printf 'pcm.!default {\n  type hw\n  card AUDIO\n}\nctl.!default {\n  type hw\n  card AUDIO\n}\n' > /tmp/asound.conf
 	$ sudo mv /tmp/asound.conf /etc/
+	$ printf '/usr/sbin/i2cset -f -y 0 0x34 0x33 0xa3\ncd /home/chip/git/radio-server/radio-server/\n./server.py &> /tmp/radio.log &\nexit 0\n' > /tmp/rc.local
+	$ sudo mv /tmp/rc.local /etc/rc.local
 	
 Configure parameters in radioserver.sh # it is already preconfigured if installation is in /usr/local/bin/radioserver
 Anyway it is possible to change default parameters of server like
@@ -39,17 +35,6 @@ Anyway it is possible to change default parameters of server like
 	--port 80 (default is 8804)
 	--player mpg123 OR mplayer OR omxplayer (for RaspberryPi)
 	--etc. see code. 
-
-Optional update-rc.d to let it start on boot (debian/ubuntu/raspiban/chip linux)
-
-	$ cd /usr/loca/bin/radioserver
-	$ sudo cp radioserver.sh /etc/init.d
-	$ sudo update-rc.d radioserver.sh defaults
-  
-Start / Stop script
-
-	$ sudo /etc/init.d/radioserver.sh start   # ( or stop, status, etc )
-
 
 ## USAGE
 
@@ -85,7 +70,9 @@ They can be changed /insert/modify/delete with User interface
 
 It took me sometime to discover them... I guess internet radio apps make that part of their value ;)
 
-# Repair corrupt flash
+# Miscellaneous notes 
 
-Try: nandtest -k /dev/mtd0
+To reflash the CHIP, see http://www.chip-community.org/index.php/Flash_from_command_line
+
+After flashing, remove the FEL jumper, connect to USB port, and connect via 'screen /dev/tty.usb1234'. To set up wifi, run 'sudo nmtui'.
 
