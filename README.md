@@ -21,10 +21,12 @@ Starting from git repository I would suggest this (suppose your target device is
 
 Install packages
 
-	$ sudo apt-get install build-essential python-pip python-dev python-cherrypy3 sqlite3 mpg123 i2c-tools python-pil
+	$ sudo apt-get install build-essential python-pip python-dev python-cherrypy3 sqlite3 mpg123 i2c-tools python-pil fonts-dejavu-core wireless-tools
 	$ sudo -H pip install --upgrade --ignore-installed pip setuptools
 	$ sudo pip install smbus2 spidev RPi.GPIO
 	$ cd git/ssd1306; sudo pip install .
+	$ cd CHIP_IO; sudo pip install .
+	$ cd Adafruit_Python_GPIO; sudo pip install .
 	
 Configure sound
         
