@@ -28,7 +28,8 @@ Install packages
 	
 Configure sound
         
-	$ sudo printf "pcm.!default {\n  type hw\n  card AUDIO\n}\nctl.!default {\n  type hw\n  card AUDIO\n}\n"
+	$ printf 'pcm.!default {\n  type hw\n  card AUDIO\n}\nctl.!default {\n  type hw\n  card AUDIO\n}\n' > /tmp/asound.conf
+	$ sudo mv /tmp/asound.conf /etc/
 	
 Configure parameters in radioserver.sh # it is already preconfigured if installation is in /usr/local/bin/radioserver
 Anyway it is possible to change default parameters of server like
