@@ -42,7 +42,18 @@ class Oled(threading.Thread):
         self.sleep_time = .05
         self.volume = 0
         self.msg_pos = 0
+        self.brightness(1)
 
+    def brightness(self, brightness):
+        contrast = brightness * 1.171 if brightness < 128 else brightness * 1.171 - 43
+        precharge = 241 if brightness > 0 else 0
+        comdetect = brightness / 8
+        self.oled.command(self.oled._const.SETPRECHARGE, precharge,
+                          self.oled._const.SETCONTRAST, int(round(contrast)),
+                          self.oled._const.SETVCOMDETECT, int(round(comdetect)),
+                          self.oled._const.DISPLAYALLON_RESUME,
+                          self.oled._const.NORMALDISPLAY)
+	
     def set_message(self, msg_genre, msg_station):
         self.msg_genre = msg_genre.split(',')[0] if ',' in msg_genre else msg_genre
         self.msg_station = msg_station
